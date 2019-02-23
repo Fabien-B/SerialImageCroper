@@ -12,6 +12,8 @@ class Sie(Ui_MainWindow):
         self.saveEnterShortcut = None
         self.saveShortcut = None
         self.skipShortcut = None
+        self.last_rect = None
+        self.last_rotation = 0
 
     def built(self):
         self.openShortcut = QtWidgets.QShortcut(QtGui.QKeySequence("Ctrl+O"), self.centralwidget)
@@ -46,8 +48,11 @@ class Sie(Ui_MainWindow):
     def load_image(self, image_path):
         self.scene.clear()
         pixmap = QtGui.QPixmap(image_path)
-        pixmap_item = self.scene.addPixmap(pixmap)
+        pixmap_item = self.scene.addPixmap(pixmap)         # type: QtWidgets.QGraphicsPixmapItem
         self.graphicsView.current_pixmap_item = pixmap_item
+        self.graphicsView.rotate_pixmap(self.last_rotation)
+        if self.last_rect is not None:
+            self.graphicsView.rect_item = self.scene.addRect(self.last_rect)
         rect = pixmap.rect()  # type: QtCore.QRect
         rect.setWidth(rect.width() * 2)
         rect.setHeight(rect.height() * 2)
@@ -69,6 +74,8 @@ class Sie(Ui_MainWindow):
     def save_image(self):
         if self.graphicsView.rect_item is not None and len(self.files) > 0:
             rect = self.graphicsView.rect_item.boundingRect()   # type
+            self.last_rect = rect
+            self.last_rotation = self.graphicsView.current_pixmap_item.rotation()
             outImg = QtGui.QPixmap(rect.width(), rect.height())
             painter = QtGui.QPainter(outImg)
             self.scene.setSceneRect(rect)

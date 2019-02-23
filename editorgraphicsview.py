@@ -47,7 +47,6 @@ class EditorGraphicsView(QtWidgets.QGraphicsView):
 
     def keyPressEvent(self, e: QtGui.QKeyEvent):
         QtWidgets.QGraphicsView.keyPressEvent(self, e)
-        print(e)
         if e.key() == QtCore.Qt.Key_Control:
             self.setDragMode(QtWidgets.QGraphicsView.ScrollHandDrag)
 
