@@ -1,5 +1,6 @@
 from PyQt5 import QtCore, QtWidgets, QtGui
 from ui.sie_ui import Ui_MainWindow
+import os
 
 
 class Sie(Ui_MainWindow):
@@ -80,8 +81,12 @@ class Sie(Ui_MainWindow):
             painter = QtGui.QPainter(outImg)
             self.scene.setSceneRect(rect)
             self.scene.render(painter)
-            name = self.files[0]+"_out.png"
-            outImg.save(name, "PNG")
+            out_dir = os.path.dirname(self.files[0]) + "/cropped/"      # TODO improve output
+            name = os.path.basename(self.files[0])
+            name, _ = os.path.splitext(name)
+            os.makedirs(out_dir, exist_ok=True)
+            path = out_dir + name + ".png"
+            outImg.save(path, "PNG")
             painter.end()
             del self.files[0]
             self.load_next_image()
