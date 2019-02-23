@@ -77,6 +77,7 @@ class EditorGraphicsView(QtWidgets.QGraphicsView):
 
     def rotate_pixmap(self, angle):
         rotation = self.current_pixmap_item.rotation() + angle
+        self.current_pixmap_item.setTransformationMode(QtCore.Qt.SmoothTransformation)
         self.current_pixmap_item.setRotation(rotation)
         center = self.current_pixmap_item.boundingRect().width()/2, self.current_pixmap_item.boundingRect().height()/2
         self.current_pixmap_item.setTransformOriginPoint(*center)
