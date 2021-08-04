@@ -75,6 +75,7 @@ class Sie(Ui_MainWindow):
     def save_image(self):
         if self.graphicsView.rect_item is not None and len(self.files) > 0:
             rect = self.graphicsView.rect_item.boundingRect()   # type
+            self.graphicsView.removeRect()
             self.last_rect = rect
             self.last_rotation = self.graphicsView.current_pixmap_item.rotation()
             outImg = QtGui.QPixmap(rect.width(), rect.height())

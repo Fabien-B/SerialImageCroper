@@ -15,6 +15,12 @@ class EditorGraphicsView(QtWidgets.QGraphicsView):
         self.rect_item = None                   # type: QtWidgets.QGraphicsRectItem
         self.dropHandler = None
 
+    def removeRect(self):
+        if self.rect_item is not None:
+            self.scene().removeItem(self.rect_item)
+            self.rect_item = None
+            self.selected_rect = None
+
     def wheelEvent(self, e: QtGui.QWheelEvent):
         self.setTransformationAnchor(QtWidgets.QGraphicsView.NoAnchor)
         self.setResizeAnchor(QtWidgets.QGraphicsView.NoAnchor)
